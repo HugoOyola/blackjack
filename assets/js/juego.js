@@ -7,13 +7,8 @@
 
 let deck = [];
 
-const dia = 6;
-const horaActual = 9;
+const crearDeck = () => {
 
-let horaApertura;
-let mensaje;
+}
 
-horaApertura = ([0,6].includes(dia)) ? 9 : 11;
-mensaje = (horaActual >= horaApertura) ? 'Esta abierto' : `Esta cerrado, hoy abrimos a las ${horaApertura}`;
-
-console.log({horaApertura, mensaje});
+crearDeck();
