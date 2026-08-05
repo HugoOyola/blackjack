@@ -22,9 +22,20 @@ const crearDeck = () => {
     }
   }
 
-  console.log(deck);
+  // console.log(deck);
   deck = _.shuffle(deck);
   console.log(deck);
 }
 
 crearDeck();
+
+// Funcion para pedir una carta:
+const pedirCarta = () => {
+  if (deck.length === 0) {
+    throw 'No hay cartas en el deck';
+  }
+
+  let carta = deck.pop();
+  console.log(`Carta pedida: ${carta}`);
+  return deck;
+}
