@@ -13,9 +13,13 @@ let puntosJugador = 0,
     puntosComputadora = 0;
 
 // Referencia del HTML
+const btnNuevo = document.querySelector('#btnNuevoJuego');
 const btnPedir = document.querySelector('#btnPedirCarta');
+const btnDetener = document.querySelector('#btnDetener');
+
 const divCartasJugador = document.querySelector('#jugador-cartas');
-const divCartasComputadora = document.querySelector('#computadora-cartas');
+const divCartasComputadora = document.querySelector('#computador-cartas');
+
 const puntosHTML = document.querySelectorAll('small');
 
 const crearDeck = () => {
@@ -52,13 +56,31 @@ const pedirCarta = () => {
 const valorCarta = (carta) => {
   const valor = carta.substring(0, carta.length - 1);
   return (isNaN(valor)) ? (valor === 'A') ? 11 : 10 : valor * 1;
+}
 
-  console.log({ valor });
+// Turno de la computadora
+const turnoComputadora = (puntosMinimos) => {
+  do{
+    const carta = pedirCarta();
+    puntosComputadora += valorCarta(carta);
+    puntosHTML[1].innerText = puntosComputadora;
+
+    const imgCarta = document.createElement('img');
+    imgCarta.src = `assets/cartas/${carta}.png`; //3H, JD
+    imgCarta.classList.add('carta');
+    divCartasComputadora.append(imgCarta);
+
+    if (puntosMinimos > 21) {
+      break;
+    }
+
+  } while(( puntosComputadora < puntosMinimos) && (puntosMinimos <= 21));
 }
 
 const valor = valorCarta(pedirCarta());
 
 // Eventos:
+// btnPedir
 btnPedir.addEventListener('click', () => {
   const carta = pedirCarta();
   console.log(carta);
@@ -75,8 +97,19 @@ btnPedir.addEventListener('click', () => {
   if (puntosJugador > 21) {
     console.warn('Lo siento mucho, perdiste');
     btnPedir.disabled = true;
+    btnDetener.disabled = true;
+    turnoComputadora(puntosJugador);
   } else if (puntosJugador === 21) {
     console.warn('21, genial!');
     btnPedir.disabled = true;
+    btnDetener.disabled = true;
+    turnoComputadora(puntosJugador);
   }
+})
+
+// btnDetener
+btnDetener.addEventListener('click', () => {
+  btnPedir.disabled = true;
+  btnDetener.disabled = true;
+  turnoComputadora(puntosJugador);
 })
